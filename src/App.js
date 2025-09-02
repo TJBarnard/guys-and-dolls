@@ -27,7 +27,12 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-dark py-3 banner-gradient">
           <div className="container-fluid px-4 px-lg-5">
             <div className="navbar-brand d-flex align-items-center gap-3">
-              <div className="rounded-circle bg-white bg-opacity-10 border border-white border-opacity-20" style={{ width: '2.25rem', height: '2.25rem' }}></div>
+              <img 
+                src="/d20.jpg" 
+                alt="D20 Logo" 
+                className="rounded-circle"
+                style={{ width: '2.25rem', height: '2.25rem', objectFit: 'cover' }}
+              />
               <span className="font-display fs-4 fw-bold text-primary">Guys And Dolls DND</span>
             </div>
             
