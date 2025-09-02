@@ -1,13 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom fantasy tweaks */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-950 text-gray-200 font-body;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3 {
+  @apply font-display text-primary;
+}
+
+/* Theme tokens */
+:root {
+  --color-primary: #eab308; /* amber-500 */
+  --color-ink: #f8fafc; /* slate-50 */
+  --color-paper: #0b0f17; /* custom deep */
+}
+
+.font-display { font-family: "Cinzel Decorative", serif; }
+.font-body { font-family: Inter, system-ui, sans-serif; }
+.text-primary { color: var(--color-primary); }
+.bg-paper { background-color: var(--color-paper); }
+.text-ink { color: var(--color-ink); }
+
+/* Premium touches */
+.banner-gradient { background-image: radial-gradient(1200px 600px at 50% -20%, rgba(234,179,8,0.15), transparent), radial-gradient(800px 400px at 10% 0%, rgba(234,179,8,0.08), transparent), radial-gradient(800px 400px at 90% 0%, rgba(234,179,8,0.08), transparent); }
+.glass { @apply bg-white/5 backdrop-blur-md border border-white/10; }
+.shadow-luxe { box-shadow: 0 30px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05); }
+.vignette::before { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 200px rgba(0,0,0,0.6); }
+.texture-parchment { /* Optional background texture; add inline style or set via element */ background-size: cover; background-position: center; }
+
+/* Luxe global polish */
+html { scroll-behavior: smooth; }
+
+::selection { background: rgba(234,179,8,0.25); color: var(--color-ink); }
+
+/* Navigation underline animation applied to all header links */
+header nav a { position: relative; transition: color 200ms ease; }
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(234,179,8,0) 0%, rgba(234,179,8,0.9) 50%, rgba(234,179,8,0) 100%);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 250ms ease;
+}
+header nav a:hover::after { transform: scaleX(1); }
+
+/* Card lift + subtle glow for any .glass element */
+.glass { transition: transform 200ms ease, box-shadow 300ms ease, border-color 300ms ease; }
+.glass:hover { transform: translateY(-3px); box-shadow: 0 40px 90px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.18); }
+
+/* Refined typography rhythm */
+section p { line-height: 1.7; }
+section h2 + p { margin-top: 0.5rem; }
+section h3 + p { margin-top: 0.25rem; }
+
+/* Subtle container fade-in */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+section { animation: fadeUp 450ms ease both; }
+
+/* Parallax utilities */
+.parallax { transform: translateZ(0); will-change: transform; }
+.parallax-slow { transform: translateZ(0) translateY(var(--parallax-offset, 0)); }
+
+/* Floating scroll cue arrow */
+.scroll-cue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.7;
+  animation: float 3s ease-in-out infinite;
+}
+
+.scroll-cue::before {
+  content: "↓";
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  text-shadow: 0 0 10px rgba(234,179,8,0.5);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
+/* Pulse animation for scroll cue */
+.scroll-cue { animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Bootstrap integration enhancements */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Text color improvements for better readability */
+.text-light {
+  color: #f8fafc !important; /* slate-50 - much lighter */
+}
+
+.text-muted {
+  color: #cbd5e1 !important; /* slate-300 - lighter gray */
+}
+
+.card-text {
+  color: #000000 !important; /* slate-200 - light gray */
+}
+
+.lead {
+  color: #f1f5f9 !important; /* slate-100 - very light */
+}
+
+/* Basic text color for body content */
+body {
+  color: #e2e8f0; /* slate-200 - good contrast on dark background */
+}
+
+/* Simple text color fixes without breaking Bootstrap */
+.text-light {
+  color: #f8fafc !important; /* slate-50 - much lighter */
+}
+
+.text-muted {
+  color: #cbd5e1 !important; /* slate-300 - lighter gray */
+}
+
+/* Fix opacity issues in text */
+.opacity-75 {
+  opacity: 0.9 !important; /* Increase from 0.75 to 0.9 for better readability */
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.card.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Custom spacing utilities */
+.py-lg-6 { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+
+@media (min-width: 992px) {
+  .py-lg-6 { padding-top: 6rem !important; padding-bottom: 6rem !important; }
 }
