@@ -13,7 +13,7 @@ export const partyMembers = [
     player: "Wesley Fido",
     bio: "A drow cleric, except he has standard human skin colour and only ever uses damaging spells. Will probably use 2 healing spells all campaign.",
     image: "/characters/leofir.jpg",
-    playlistUrl: "",
+    playlistUrl: "https://l.messenger.com/l.php?u=https%3A%2F%2Fopen.spotify.com%2Fplaylist%2F4QvZHRNdg6Js3WJEflybw7%3Fsi%3DeD6rgLmMQrC8N_pY3nbHJg%26pi%3DZ81bEXb9QFCYY&h=AT1pqZPpZGl6ENsSnsDU8fULvYeQk4xeQ8HN0yWVjIwxo1ITPLnPMkkOQyotgBaW-KFj97PSQcvbSEQRQ-9z_HAVJ3I0IisngwM1RCpVRqP7zpcKRxXzKt34TM3BSRpgbcBdYVE0KlhokFKJ2G-LYQ",
   },
   {
     id: "mouven",
@@ -21,7 +21,7 @@ export const partyMembers = [
     player: "Olivia Dolan",
     bio: "Our ruthless minotaur. Lover of two things. His husband Bangbore and weapons.",
     image: "/characters/mouven.jpg",
-    playlistUrl: "",
+    playlistUrl: "https://l.messenger.com/l.php?u=https%3A%2F%2Fopen.spotify.com%2Fplaylist%2F6hsu4cxUaocRT4VriSUTVD%3Fsi%3DUv_GzSx5S_qd6MFLlh2HOw%26pi%3DmNfimhZwTuq1X&h=AT1pqZPpZGl6ENsSnsDU8fULvYeQk4xeQ8HN0yWVjIwxo1ITPLnPMkkOQyotgBaW-KFj97PSQcvbSEQRQ-9z_HAVJ3I0IisngwM1RCpVRqP7zpcKRxXzKt34TM3BSRpgbcBdYVE0KlhokFKJ2G-LYQ",
   },
   {
     id: "thorne",
@@ -45,6 +45,6 @@ export const partyMembers = [
     player: "Joshua Wilmott",
     bio: "A Bridge Troll Sorcerer played by our glorious DM from behind the screen.",
     image: "/characters/bangbore.jpg",
-    playlistUrl: "",
+    playlistUrl: "https://l.messenger.com/l.php?u=https%3A%2F%2Fopen.spotify.com%2Fplaylist%2F57Y31I0Si49MIyjGFQwOhd%3Fsi%3DNS12VvcASv6OCcbEnDm1Ag&h=AT1pqZPpZGl6ENsSnsDU8fULvYeQk4xeQ8HN0yWVjIwxo1ITPLnPMkkOQyotgBaW-KFj97PSQcvbSEQRQ-9z_HAVJ3I0IisngwM1RCpVRqP7zpcKRxXzKt34TM3BSRpgbcBdYVE0KlhokFKJ2G-LYQ",
   },
 ]; 
