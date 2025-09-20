@@ -2,6 +2,7 @@ import "./index.css";
 import { partyMembers } from "./data/party";
 import { EmbedFrame } from "./utils/embed";
 import { useEffect } from "react";
+import { recordings } from "./data/recordings";
 
 function App() {
   useEffect(() => {
@@ -44,9 +45,8 @@ function App() {
               <ul className="navbar-nav ms-auto gap-3">
                 <li className="nav-item"><a className="nav-link hover:text-primary" href="#party">Party</a></li>
                 <li className="nav-item"><a className="nav-link hover:text-primary" href="#world">World</a></li>
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#recaps">Recaps</a></li>
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#extras">Extras</a></li>
                 <li className="nav-item"><a className="nav-link hover:text-primary" href="#soundtrack">Soundtrack</a></li>
+                <li className="nav-item"><a className="nav-link hover:text-primary" href="#recordings">Recordings</a></li>
               </ul>
             </div>
           </div>
@@ -158,6 +158,47 @@ function App() {
                         </div>
                       )}
                     </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recordings Section */}
+      <section id="recordings" className="py-5 py-lg-6">
+        <div className="container px-4 px-lg-5">
+          <div className="row">
+            <div className="col-lg-8 col-xl-6">
+              <h2 className="font-display display-4 text-primary mb-3">Recordings</h2>
+              <p className="lead text-muted mb-5">Drop MP3/M4A files into <code>public/recordings/</code> or paste external links in <code>src/data/recordings.js</code>.</p>
+            </div>
+          </div>
+          <div className="row g-4">
+            {recordings.length === 0 && (
+              <div className="col-12 text-center text-muted">No recordings listed yet.</div>
+            )}
+            {recordings.map((r) => (
+              <div key={r.id} className="col-md-6 col-lg-4">
+                <div className="card glass shadow-luxe border-0 h-100">
+                  <div className="card-body p-4">
+                    <h3 className="font-display h5 text-primary mb-1">{r.title}</h3>
+                    {r.date && <p className="text-muted small mb-3">{new Date(r.date).toLocaleDateString()}</p>}
+                    {r.type === 'audio' ? (
+                      <audio controls className="w-100">
+                        {r.url?.toLowerCase().endsWith('.m4a') ? (
+                          <source src={r.url} type="audio/mp4" />
+                        ) : r.url?.toLowerCase().endsWith('.mp3') ? (
+                          <source src={r.url} type="audio/mpeg" />
+                        ) : (
+                          <source src={r.url} />
+                        )}
+                        Your browser does not support the audio element.
+                      </audio>
+                    ) : (
+                      <a href={r.url} target="_blank" rel="noreferrer" className="btn btn-outline-light glass shadow-luxe mt-2">Open Recording</a>
+                    )}
                   </div>
                 </div>
               </div>
