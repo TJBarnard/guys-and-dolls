@@ -27,7 +27,7 @@ export const partyMembers = [
     id: "thorne",
     name: "Thorne Bell",
     player: "Jessica Lodge",
-    bio: "The plant and animal loving Druid. She does all the healing. But she's not a healer, she's a druid. Try telling Wes that. Does not currently have a yeast infection.s",
+    bio: "The plant and animal loving Druid. She does all the healing. But she's not a healer, she's a druid. Try telling Wes that. Does not currently have a yeast infection.",
     image: "/characters/thorne.jpg",
     playlistUrl: "https://open.spotify.com/playlist/213bbxfA8eXHb8SlMUGTsE",
   },
