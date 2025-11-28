@@ -29,3 +29,9 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+# Large audio recordings (host externally or use Git LFS)
+/public/recordings/*.m4a
+/public/recordings/*.mp3
+/public/recordings/*.wav
+/public/recordings/*.ogg

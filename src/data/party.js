@@ -32,14 +32,6 @@ export const partyMembers = [
     playlistUrl: "https://open.spotify.com/playlist/213bbxfA8eXHb8SlMUGTsE",
   },
   {
-    id: "zenash",
-    name: "Zenash",
-    player: "Matthew Shaw",
-    bio: "Matt's 3rd character, an Orc barbarian. He will stick with one eventually....",
-    image: "/characters/zenash.jpg",
-    playlistUrl: "",
-  },
-  {
     id: "bangbore",
     name: "Bangbore Ironwill",
     player: "Joshua Wilmott",
