@@ -4,7 +4,7 @@ export const partyMembers = [
     name: "Valerie Shockwind",
     player: "Tom Barnard (creator of the site)",
     bio: "Gay dragon girl my beloved. Wields a staff of frost, and is a big fan of Scorching Ray. And Women.",
-    image: "/characters/valerienew.png",
+    image: "/characters/valerie new.png",
     playlistUrl: "https://open.spotify.com/playlist/1OhwBc99qmLTkoX4T83BMv?si=ccee26886aed4637",
   },
   {
