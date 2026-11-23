@@ -5,8 +5,8 @@ export const newPartyMembers = [
     name: "Arell Helewynn",
     player: "Tom Barnard (creator of the site)",
     bio: "Barista. Non-Binary, bard on the side. All ya gotta know. Makes a better latte than you, and you know it.",
-    image: "",
-    playlistUrl: "",
+    image: "/characters/arell.jpeg",
+    playlistUrl: "https://open.spotify.com/playlist/6yMW5fH013L8cAu5dFHhiP",
   },
   {
     id: "c2-wesley",
