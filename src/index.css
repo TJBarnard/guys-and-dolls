@@ -105,6 +105,28 @@ section { animation: fadeUp 450ms ease both; }
   letter-spacing: 0.025em;
 }
 
+.campaign-bar {
+  background: rgba(11, 15, 23, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.campaign-tab {
+  background: transparent;
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.campaign-tab:hover,
+.campaign-tab.active {
+  color: var(--color-primary);
+  border-color: rgba(234, 179, 8, 0.75);
+  background: rgba(234, 179, 8, 0.14);
+}
+
 /* Text color improvements for better readability */
 .text-light {
   color: #f8fafc !important; /* slate-50 - much lighter */

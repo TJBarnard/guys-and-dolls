@@ -1,10 +1,26 @@
 import "./index.css";
-import { partyMembers } from "./data/party";
+import { campaigns } from "./data/campaigns";
 import { EmbedFrame } from "./utils/embed";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { recordings } from "./data/recordings";
 
 function App() {
+  const [campaignId, setCampaignId] = useState(campaigns[0].id);
+  const campaign = campaigns.find((item) => item.id === campaignId) ?? campaigns[0];
+  const visibleRecordings = recordings.filter(
+    (recording) => !recording.campaignId || recording.campaignId === campaign.id
+  );
+  const navLinks = [
+    { href: "#party", label: "Party" },
+    campaign.showWorld ? { href: "#world", label: "World" } : null,
+    { href: "#soundtrack", label: "Soundtrack" },
+    campaign.showRecordings ? { href: "#recordings", label: "Recordings" } : null,
+  ].filter(Boolean);
+
+  useEffect(() => {
+    document.title = `${campaign.name} — Guys & Dolls`;
+  }, [campaign.name]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.pageYOffset;
@@ -34,7 +50,7 @@ function App() {
                 className="rounded-circle"
                 style={{ width: '2.25rem', height: '2.25rem', objectFit: 'cover' }}
               />
-              <span className="font-display fs-4 fw-bold text-primary">Guys And Dolls DND</span>
+              <span className="font-display fs-4 fw-bold text-primary">{campaign.name}</span>
             </div>
             
             <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -43,14 +59,31 @@ function App() {
             
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto gap-3">
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#party">Party</a></li>
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#world">World</a></li>
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#soundtrack">Soundtrack</a></li>
-                <li className="nav-item"><a className="nav-link hover:text-primary" href="#recordings">Recordings</a></li>
+                {navLinks.map((link) => (
+                  <li key={link.href} className="nav-item">
+                    <a className="nav-link hover:text-primary" href={link.href}>{link.label}</a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </nav>
+        <div className="campaign-bar">
+          <div className="container-fluid px-4 px-lg-5 d-flex flex-wrap gap-2 py-3" role="tablist" aria-label="Campaigns">
+            {campaigns.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={item.id === campaign.id}
+                className={`campaign-tab ${item.id === campaign.id ? "active" : ""}`}
+                onClick={() => setCampaignId(item.id)}
+              >
+                {item.name}
+              </button>
+            ))}
+          </div>
+        </div>
       </header>
 
       {/* Hero Banner with optional background */}
@@ -64,11 +97,13 @@ function App() {
         <div className="container position-relative py-5">
           <div className="row justify-content-center">
             <div className="col-lg-8 col-xl-7 text-center">
-              <h1 className="font-display display-1 fw-bold text-primary drop-shadow mb-4">Guys & Dolls</h1>
-              <p className="lead text-light mb-5 opacity-75">Welcome to the crazy world of Guys & Dolls. This was a fun project to make!</p>
+              <h1 className="font-display display-1 fw-bold text-primary drop-shadow mb-4">{campaign.name}</h1>
+              <p className="lead text-light mb-5 opacity-75">{campaign.blurb}</p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
                 <a href="#party" className="btn btn-outline-light btn-lg glass shadow-luxe">Meet the Party</a>
-                <a href="#world" className="btn btn-outline-light btn-lg glass shadow-luxe">Explore the World</a>
+                {campaign.showWorld && (
+                  <a href="#world" className="btn btn-outline-light btn-lg glass shadow-luxe">Explore the World</a>
+                )}
               </div>
             </div>
           </div>
@@ -83,20 +118,24 @@ function App() {
         <div className="container px-4 px-lg-5">
           <div className="row">
             <div className="col-lg-8 col-xl-6">
-              <h2 className="font-display display-4 text-primary mb-3">The Party</h2>
+              <h2 className="font-display display-4 text-primary mb-3">{campaign.partyHeading}</h2>
             </div>
           </div>
           <div className="row g-4">
-            {partyMembers.map((c) => (
+            {campaign.members.map((c) => (
               <div key={c.id} className="col-sm-6 col-lg-4">
                 <article className="card glass shadow-luxe border-0 h-100">
-                  <div className="card-img-top position-relative" style={{ aspectRatio: '16/10' }}>
-                    <img src={c.image} alt={c.name} className="w-100 h-100 object-fit-cover" />
+                  <div className="card-img-top position-relative bg-dark bg-opacity-30" style={{ aspectRatio: '16/10' }}>
+                    {c.image ? (
+                      <img src={c.image} alt={c.name || c.player} className="w-100 h-100 object-fit-cover" />
+                    ) : (
+                      <div className="w-100 h-100 d-flex align-items-center justify-content-center text-muted">Portrait coming soon</div>
+                    )}
                   </div>
                   <div className="card-body p-4">
-                    <h3 className="font-display h4 text-primary mb-1">{c.name}</h3>
-                    <p className="text-secondary small mb-3">Played by {c.player}</p>
-                    <p className="card-text text-dark opacity-90">{c.bio}</p>
+                    <h3 className="font-display h4 text-primary mb-1">{c.name || "Unnamed"}</h3>
+                    {c.player && <p className="text-secondary small mb-3">Played by {c.player}</p>}
+                    {c.bio && <p className="card-text text-dark opacity-90">{c.bio}</p>}
                   </div>
                 </article>
               </div>
@@ -105,28 +144,39 @@ function App() {
         </div>
       </section>
 
-      {/* Map Showcase */}
+      {campaign.showWorld && campaign.world && (
       <section id="world" className="py-5 py-lg-6">
         <div className="container px-4 px-lg-5">
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
-              <h2 className="font-display display-4 text-primary mb-4">The Mirror Lands</h2>
-              <p className="lead text-light opacity-75 mb-4">A hand-drawn map of the realms—Riftwood, Snake Skin Cove, and beyond. Click to view full-size.</p>
-              <ul className="list-unstyled text-muted">
-                <li className="mb-2"><i className="bi bi-check-circle-fill text-primary me-2"></i>Regions, coves, mountains, and islands</li>
-                <li className="mb-2"><i className="bi bi-check-circle-fill text-primary me-2"></i>Used for session recaps and world pages</li>
-                <li className="mb-2"><i className="bi bi-check-circle-fill text-primary me-2"></i>Optimized for desktop and mobile viewing</li>
-              </ul>
+              <h2 className="font-display display-4 text-primary mb-4">{campaign.world.title}</h2>
+              <p className="lead text-light opacity-75 mb-4">{campaign.world.description}</p>
+              {campaign.world.points.length > 0 && (
+                <ul className="list-unstyled text-muted">
+                  {campaign.world.points.map((point) => (
+                    <li key={point} className="mb-2"><i className="bi bi-check-circle-fill text-primary me-2"></i>{point}</li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="col-lg-6">
-              <a href="/map.jpg" target="_blank" rel="noreferrer" className="d-block rounded-4 overflow-hidden glass shadow-luxe">
-                <img src="/map.jpg" alt="Campaign map" className="w-100 h-auto transition-transform duration-300 group-hover:scale-[1.02]" />
-              </a>
-              <p className="text-muted small mt-3">Tip: Click the map to open in a new tab.</p>
+              {campaign.world.image ? (
+                <>
+                  <a href={campaign.world.image} target="_blank" rel="noreferrer" className="d-block rounded-4 overflow-hidden glass shadow-luxe">
+                    <img src={campaign.world.image} alt={`${campaign.name} map`} className="w-100 h-auto transition-transform duration-300 group-hover:scale-[1.02]" />
+                  </a>
+                  <p className="text-muted small mt-3">Tip: Click the map to open in a new tab.</p>
+                </>
+              ) : (
+                <div className="rounded-4 glass shadow-luxe d-flex align-items-center justify-content-center text-muted p-5" style={{ minHeight: "16rem" }}>
+                  No map for this campaign yet.
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
+      )}
 
       {/* Soundtrack Section (per character) */}
       <section id="soundtrack" className="py-5 py-lg-6">
@@ -134,16 +184,16 @@ function App() {
           <div className="row">
             <div className="col-lg-8 col-xl-6">
               <h2 className="font-display display-4 text-primary mb-3">Soundtrack</h2>
-              <p className="lead text-muted mb-5">Playlists made by the players themselves. What would the characters listen to?</p>
+              <p className="lead text-muted mb-5">{campaign.soundtrackIntro}</p>
             </div>
           </div>
           <div className="row g-4">
-            {partyMembers.map((c) => (
+            {campaign.members.map((c) => (
               <div key={c.id} className="col-lg-4">
                 <div className="card glass shadow-luxe border-0 h-100">
                   <div className="card-header bg-transparent border-bottom border-white border-opacity-10 p-4">
-                    <h3 className="font-display h5 text-primary mb-1">{c.name}</h3>
-                    <p className="text-muted small mb-0">Played by {c.player}</p>
+                    <h3 className="font-display h5 text-primary mb-1">{c.name || "Unnamed"}</h3>
+                    {c.player && <p className="text-muted small mb-0">Played by {c.player}</p>}
                   </div>
                   <div className="card-body p-0">
                     <div className="ratio ratio-16x9 bg-dark bg-opacity-30">
@@ -166,7 +216,7 @@ function App() {
         </div>
       </section>
 
-      {/* Recordings Section */}
+      {campaign.showRecordings && (
       <section id="recordings" className="py-5 py-lg-6">
         <div className="container px-4 px-lg-5">
           <div className="row">
@@ -176,10 +226,10 @@ function App() {
             </div>
           </div>
           <div className="row g-4">
-            {recordings.length === 0 && (
+            {visibleRecordings.length === 0 && (
               <div className="col-12 text-center text-muted">No recordings listed yet.</div>
             )}
-            {recordings.map((r) => (
+            {visibleRecordings.map((r) => (
               <div key={r.id} className="col-md-6 col-lg-4">
                 <div className="card glass shadow-luxe border-0 h-100">
                   <div className="card-body p-4">
@@ -206,6 +256,7 @@ function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Footer */}
       <footer className="py-4 mt-5 border-top border-white border-opacity-10">
